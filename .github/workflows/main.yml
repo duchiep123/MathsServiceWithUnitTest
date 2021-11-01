@@ -64,6 +64,18 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/maths-service:latest
       
+      # Build Docker image
+      - name: Docker build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+        
+      # Push the Docker image to Heroku Container Registry
+      - name: Publish
+        run: |
+          cd ./Maths-Service
+          docker build -t maths-service -f Dockerfile .
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
+          
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
