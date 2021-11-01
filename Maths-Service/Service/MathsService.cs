@@ -13,7 +13,7 @@ namespace Maths_Service.Service
         }
         public double Add(double x1, double x2)
         {
-            return (x1 + x2 + 1);
+            return (x1 + x2);
         }
 
         public double Divide(double x1, double x2)
