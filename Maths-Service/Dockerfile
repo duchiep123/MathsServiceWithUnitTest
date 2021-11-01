@@ -19,4 +19,5 @@ RUN dotnet publish "Maths-Service.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Maths-Service.dll"]
+#ENTRYPOINT ["dotnet", "Maths-Service.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Maths-Service.dll
