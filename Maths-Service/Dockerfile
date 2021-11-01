@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Maths-Service/Maths-Service.csproj", "Maths-Service/"]
-RUN dotnet restore "Maths-Service/Maths-Service.csproj"
+COPY ["MathsServiceWithUnitTest/Maths-Service/Maths-Service.csproj", "MathsServiceWithUnitTest/Maths-Service/"]
+RUN dotnet restore "MathsServiceWithUnitTest/Maths-Service/Maths-Service.csproj"
 COPY . .
-WORKDIR "/src/Maths-Service"
+WORKDIR "/src/MathsServiceWithUnitTest/Maths-Service"
 RUN dotnet build "Maths-Service.csproj" -c Release -o /app/build
 
 FROM build AS publish
