@@ -57,27 +57,21 @@ jobs:
         
         
       - uses: actions/checkout@v2
-      - name: docker login
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-        run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
       - name: Build the Docker image
         run: | 
           cd ./Maths-Service
           docker build . --file Dockerfile --tag duchiep314/maths-service:latest
       
-      - name: Docker Push
+      - name: Push to Docker Hub
         run: docker push duchiep314/maths-service
       
       # Build Docker image
-      - name: Docker build
+      - name: Docker build for push Heroku
         run: | 
           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
           
     # Push the Docker image to Heroku Container Registry
-      - name: Publish
+      - name: Publish to Heroku
         run: |
           cd ./Maths-Service
           docker build -t maths-service -f Dockerfile .
