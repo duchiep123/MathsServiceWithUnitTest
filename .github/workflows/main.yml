@@ -64,9 +64,8 @@ jobs:
       
       - name: Push to Docker Hub
         run: docker push duchiep314/maths-service
-      
-      # Build Docker image
-      - name: Docker build for push Heroku
+    
+      - name: Logging in to the registry via the Docker CLI
         run: | 
           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
           
