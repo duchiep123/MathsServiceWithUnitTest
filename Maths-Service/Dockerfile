@@ -9,10 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 #COPY ["Maths-Service/Maths-Service.csproj", "Maths-Service/"]
 COPY . Maths-Service/
-RUN dotnet restore "Maths-Service.csproj"
+RUN dotnet restore "Maths-Service/Maths-Service.csproj"
 COPY . .
 WORKDIR "/src/Maths-Service"
-RUN ls
 RUN dotnet build "Maths-Service.csproj" -c Release -o /app/build
 
 FROM build AS publish
