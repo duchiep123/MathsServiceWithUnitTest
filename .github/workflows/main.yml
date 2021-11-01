@@ -35,7 +35,7 @@ jobs:
       - name: Build project source and run unit tests
         shell: bash
         run: |
-          dotnet restore "eShopOnContainers-ServicesAndWebApps.sln"
+          dotnet restore "MathsServiceWithUnitTest.sln"
           dotnet build --no-restore
           cd MathsServiceUnitTest
           dotnet test --no-build -v=normal
