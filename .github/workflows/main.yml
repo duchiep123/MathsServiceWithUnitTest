@@ -62,7 +62,7 @@ jobs:
     # Push the Docker image to Heroku Container Registry
       - name: Publish
         run: |
-          docker build -t maths-service2 -f Maths-Service/Dockerfile .
+          docker build -t maths-service -f Maths-Service/Dockerfile .
           heroku container:push web -a $APP_NAME
           heroku container:release web -a $APP_NAME
       
