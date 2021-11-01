@@ -64,16 +64,22 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/maths-service:latest
         
-      # Build Docker image
-      - name: Docker build
-        run: docker login --username=duchiep314 --password=$HEROKU_API_KEY registry.heroku.com
-      
-      # Push the Docker image to Heroku Container Registry
-      - name: Publish
+      - name: Login to Heroku Container registry
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build and push
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      # Change the directory to where Dockerfile is located using cd command before running Heroku CLI commands
         run: |
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
-          
+          cd ./Maths-Service
+          heroku container:push web -a $APP_NAME 
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release web -a $APP_NAME
+      
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
