@@ -16,6 +16,7 @@ on:
 #set environment variables 
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  APP_NAME: ${{ 'my-maths-service' }}
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -72,8 +73,8 @@ jobs:
       - name: Publish
         run: |
           cd ./Maths-Service
-          heroku container:push web -app=$APP_NAME
-          heroku container:release web -app=$APP_NAME
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
