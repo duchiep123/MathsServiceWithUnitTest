@@ -10,6 +10,8 @@ WORKDIR /src
 #COPY ["Maths-Service/Maths-Service.csproj", "Maths-Service/"]
 COPY . Maths-Service/
 RUN ls
+RUN cd Maths-Service
+RUN ls
 RUN dotnet restore "Maths-Service/Maths-Service.csproj"
 COPY . .
 WORKDIR "/src/Maths-Service"
