@@ -73,7 +73,7 @@ jobs:
       - name: Publish
         run: |
           cd ./Maths-Service
-          docker build -t maths-service -f Maths-Service/Dockerfile .
+          docker build -t maths-service -f Dockerfile .
           heroku container:push web -a $APP_NAME
           heroku container:release web --app = $APP_NAME
       
