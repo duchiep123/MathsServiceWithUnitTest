@@ -71,8 +71,9 @@ jobs:
     # Push the Docker image to Heroku Container Registry
       - name: Publish
         run: |
-          heroku container:push duchiep314/maths-service -a my-maths-service
-          heroku container:release duchiep314/maths-service --app=my-maths-service
+          cd ./Maths-Service
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
