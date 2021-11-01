@@ -63,11 +63,6 @@ jobs:
           file: ./Maths-Service/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/maths-service:latest
-          
-      # Build Docker image
-      - name: Docker build
-        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
