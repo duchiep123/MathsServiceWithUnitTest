@@ -71,6 +71,8 @@ jobs:
     # Push the Docker image to Heroku Container Registry
       - name: Publish
         run: |
+          docker tag maths-service registry.heroku.com/web/release
+          docker push registry.heroku.com/web/release
           heroku container:push web -a my-maths-service
           heroku container:release web -a my-maths-service
       
