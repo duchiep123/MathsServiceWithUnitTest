@@ -68,13 +68,13 @@ jobs:
       - name: Docker build
         run: | 
           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-          docker tag duchiep314/maths-service registry.heroku.com/my-maths-service/web
+          docker tag maths-service registry.heroku.com/my-maths-service/web
           docker push registry.heroku.com/my-maths-service/web
 
     # Push the Docker image to Heroku Container Registry
       - name: Publish
         run: |
-          docker build -t duchiep314/maths-service -f Maths-Service/Dockerfile .
+          docker build -t maths-service -f Maths-Service/Dockerfile .
           heroku container:push web -a $APP_NAME
           heroku container:release web --app = $APP_NAME
       
