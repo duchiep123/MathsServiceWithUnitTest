@@ -54,16 +54,35 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
+        
+        
+      - uses: actions/checkout@v2
+      - name: docker login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASSWORD: DOCKER_HUB_ACCESS_TOKEN
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+      - name: Build the Docker image
+        run: | 
+          cd ./Maths-Service
+          docker build . --file Dockerfile --tag duchiep314/maths-service:latest
       
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: ./Maths-Service/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/maths-service:latest
+      - name: Docker Push
+        run: docker push duchiep314/maths-service
       
+      # Build Docker image
+      - name: Docker build
+        run: | 
+          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+          
+    # Push the Docker image to Heroku Container Registry
+      - name: Publish
+        run: |
+          cd ./Maths-Service
+          docker build -t maths-service -f Dockerfile .
+          heroku container:push web -a $APP_NAME
+          heroku container:release web -a $APP_NAME
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
