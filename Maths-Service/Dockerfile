@@ -7,13 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-#COPY ["Maths-Service/Maths-Service.csproj", "Maths-Service/"]
-COPY ["Maths-Service.csproj", "./"]
+COPY ["Maths-Service/Maths-Service.csproj", "Maths-Service/"]
 RUN dotnet restore "Maths-Service/Maths-Service.csproj"
-RUN dotnet restore "./Maths-Service.csproj"
 COPY . .
-#WORKDIR "/src/Maths-Service"
-WORKDIR "/src/."
+WORKDIR "/src/Maths-Service"
 RUN dotnet build "Maths-Service.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -22,5 +19,4 @@ RUN dotnet publish "Maths-Service.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-#ENTRYPOINT ["dotnet", "Maths-Service.dll"]
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet Maths-Service.dll
+ENTRYPOINT ["dotnet", "Maths-Service.dll"]
