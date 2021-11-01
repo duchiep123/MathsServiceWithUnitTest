@@ -66,13 +66,13 @@ jobs:
       
       # Build Docker image
       - name: Docker build
-        run: docker login --username=duchiep314 --password=$HEROKU_API_KEY registry.heroku.com
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
     # Push the Docker image to Heroku Container Registry
       - name: Publish
         run: |
-          heroku container:push web -a maths-service
-          heroku container:release web -a maths-service
+          heroku container:push web -a my-maths-service
+          heroku container:release web -a my-maths-service
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
